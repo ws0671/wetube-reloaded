@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node build/init.js",
-    "build" :"npm run build:server && npm run build:assets",
+    "build": "npm run build:server && npm run build:assets",
     "build:server": "babel src -d build",
     "build:assets": "webpack --mode=production",
     "dev:server": "nodemon",
@@ -30,6 +30,7 @@
     "express": "^4.17.1",
     "express-flash": "0.0.2",
     "express-session": "^1.17.2",
+    "mongoose": "^6.1.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.3",
     "node-fetch": "^2.6.1",
