@@ -64,7 +64,10 @@ export const postLogin = async (req, res) => {
 export const startGithubLogin = (req, res) => {
   const baseUrl = "https://github.com/login/oauth/authorize";
   const config = {
-    client_id: process.env.GH_CLIENT,
+    client_id:
+      process.env.NODE_EN === "production"
+        ? process.env.GH_CLIENT_DEPLOY
+        : process.env.GH_CLIENT_DEV,
     allow_signup: false,
     scope: "read:user user:email",
   };
@@ -76,8 +79,14 @@ export const startGithubLogin = (req, res) => {
 export const finishGithubLogin = async (req, res) => {
   const baseUrl = "https://github.com/login/oauth/access_token";
   const config = {
-    client_id: process.env.GH_CLIENT,
-    client_secret: process.env.GH_SECRET,
+    client_id:
+      process.env.NODE_EN === "production"
+        ? process.env.GH_CLIENT_DEPLOY
+        : process.env.GH_CLIENT_DEV,
+    client_secret:
+      process.env.NODE_EN === "production"
+        ? process.env.GH_SECRET_DEPLOY
+        : process.env.GH_SECRET_DEV,
     code: req.query.code,
   };
   const params = new URLSearchParams(config).toString();
@@ -163,7 +172,6 @@ export const postEdit = async (req, res) => {
     });
   }
   const isHeroku = process.env.NODE_ENV === "production";
-  console.log("file:" + file, "isHeroku:" + isHeroku);
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
